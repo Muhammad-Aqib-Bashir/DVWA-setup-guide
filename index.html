@@ -1,533 +1,770 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>DVWA Setup Guide | Interactive & Copyable Commands</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  <head>
+    <!-- SEO Meta Tags -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Complete DVWA installation guide for Ubuntu and Kali Linux. Step-by-step instructions with copyable commands for Apache, MySQL, and PHP setup. Perfect for beginners learning web security."
+    />
+    <meta
+      name="keywords"
+      content="DVWA installation, Damn Vulnerable Web App, Ubuntu setup, Kali Linux, Apache MySQL PHP, web security tutorial, vulnerable web app setup"
+    />
+    <meta name="author" content="DVWA Setup Guide" />
+    <meta
+      name="robots"
+      content="index, follow, max-snippet:-1, max-image-preview:large"
+    />
+    <meta name="language" content="English" />
+    <meta name="theme-color" content="#3b82f6" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="DVWA Installation Guide for Beginners - Ubuntu & Kali Linux"
+    />
+    <meta
+      property="og:description"
+      content="Step-by-step DVWA setup guide with copyable commands. Learn web security with this vulnerable application."
+    />
+    <meta name="twitter:card" content="summary" />
 
-    body {
-      background: linear-gradient(145deg, #f1f5f9 0%, #e9eef3 100%);
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-      line-height: 1.5;
-      padding: 2rem 1rem;
-      color: #0f172a;
-    }
+    <title>DVWA Installation Guide for Beginners - Ubuntu & Kali Linux</title>
 
-    .container {
-      max-width: 1300px;
-      margin: 0 auto;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(0px);
-      border-radius: 2rem;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-      overflow: hidden;
-      transition: all 0.2s;
-    }
-
-    /* header / hero */
-    .hero {
-      background: #0f172a;
-      padding: 2rem 2rem 1.8rem 2rem;
-      color: white;
-      border-bottom: 4px solid #3b82f6;
-    }
-
-    .hero h1 {
-      font-size: 2.2rem;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      background: linear-gradient(135deg, #ffffff, #a5f3fc);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-      display: inline-block;
-    }
-
-    .hero p {
-      margin-top: 0.75rem;
-      color: #cbd5e1;
-      max-width: 85%;
-      font-size: 1rem;
-    }
-
-    .badge {
-      background: #1e293b;
-      display: inline-block;
-      padding: 0.25rem 0.8rem;
-      border-radius: 40px;
-      font-size: 0.75rem;
-      font-weight: 500;
-      color: #94a3b8;
-      margin-top: 0.75rem;
-      border: 1px solid #334155;
-    }
-
-    /* main content */
-    .content {
-      padding: 2rem 2rem 2.5rem 2rem;
-    }
-
-    /* section styling */
-    .step-section {
-      background: white;
-      border-radius: 1.5rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-      border: 1px solid #e2e8f0;
-      overflow: hidden;
-      transition: box-shadow 0.2s;
-    }
-
-    .step-section:hover {
-      box-shadow: 0 12px 20px -12px rgba(0, 0, 0, 0.1);
-    }
-
-    .section-header {
-      background: #f8fafc;
-      padding: 1rem 1.8rem;
-      border-bottom: 1px solid #e9edf2;
-    }
-
-    .section-header h2 {
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: #0f172a;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .section-header h2:before {
-      content: "▹";
-      color: #3b82f6;
-      font-size: 1.3rem;
-    }
-
-    .step-body {
-      padding: 1.2rem 1.8rem 1.8rem 1.8rem;
-    }
-
-    .step-body p, .desc-text {
-      margin-bottom: 0.9rem;
-      color: #1e293b;
-    }
-
-    .why-box {
-      background: #f1f5f9;
-      border-left: 4px solid #3b82f6;
-      padding: 0.8rem 1.2rem;
-      margin: 1rem 0 1.2rem 0;
-      border-radius: 0.75rem;
-      font-size: 0.9rem;
-      color: #1e293b;
-    }
-
-    .why-box strong {
-      color: #0f172a;
-      font-weight: 600;
-    }
-
-    /* code block wrapper (copy button injected) */
-    .code-wrapper {
-      position: relative;
-      margin: 1.2rem 0;
-      border-radius: 1rem;
-      overflow: hidden;
-      background: #0f172a;
-      transition: all 0.1s;
-    }
-
-    pre {
-      margin: 0;
-      padding: 1.2rem 1.5rem;
-      background: #0f172a;
-      color: #e2e8f0;
-      font-family: 'Fira Code', 'JetBrains Mono', 'Cascadia Code', monospace;
-      font-size: 0.85rem;
-      overflow-x: auto;
-      white-space: pre-wrap;
-      word-break: break-word;
-      tab-size: 4;
-      border-radius: 1rem;
-      line-height: 1.5;
-    }
-
-    .copy-btn {
-      position: absolute;
-      top: 0.65rem;
-      right: 0.8rem;
-      background: #334155;
-      border: none;
-      color: #f1f5f9;
-      font-size: 0.75rem;
-      font-weight: 500;
-      padding: 0.3rem 0.8rem;
-      border-radius: 2rem;
-      cursor: pointer;
-      backdrop-filter: blur(4px);
-      transition: all 0.2s ease;
-      font-family: inherit;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-    }
-
-    .copy-btn:hover {
-      background: #3b82f6;
-      transform: scale(0.96);
-    }
-
-    .copy-btn.copied {
-      background: #10b981;
-      color: white;
-    }
-
-    hr {
-      margin: 1.5rem 0;
-      border: none;
-      height: 1px;
-      background: #e2e8f0;
-    }
-
-    /* inline code light */
-    code {
-      background: #eef2ff;
-      padding: 0.2rem 0.4rem;
-      border-radius: 6px;
-      font-size: 0.85rem;
-      color: #1e40af;
-      font-family: monospace;
-    }
-
-    .note-tip {
-      background: #fef9e3;
-      border: 1px solid #fde047;
-      border-radius: 1rem;
-      padding: 1rem 1.5rem;
-      margin: 1.5rem 0;
-    }
-
-    footer {
-      background: #f8fafc;
-      border-top: 1px solid #e2e8f0;
-      padding: 1.2rem 2rem;
-      text-align: center;
-      font-size: 0.8rem;
-      color: #475569;
-    }
-
-    @media (max-width: 700px) {
-      .content {
-        padding: 1.2rem;
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
       }
-      .step-body {
-        padding: 1rem;
+
+      html {
+        scroll-behavior: smooth;
       }
-      pre {
-        font-size: 0.75rem;
-        padding: 1rem;
+
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+        color: #1f2937;
+        background: #ffffff;
+        font-size: 16px;
       }
+
+      .wrapper {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+
+      /* Header */
+      header {
+        background: #ffffff;
+        border-bottom: 1px solid #e5e7eb;
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      }
+
+      .logo {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #3b82f6;
+        text-decoration: none;
+      }
+
+      /* Hero Section */
+      .hero {
+        padding: 3rem 0 2rem;
+        margin-bottom: 2rem;
+      }
+
       .hero h1 {
-        font-size: 1.7rem;
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+        color: #111827;
+        line-height: 1.2;
       }
-    }
-  </style>
-</head>
-<body>
-<div class="container">
-  <div class="hero">
-    <h1>⚡ DVWA Installation Guide</h1>
-    <p>Ubuntu / Kali Linux • clean, reliable, and ready for security testing</p>
-    <div class="badge">Apache + MySQL + PHP | intentionally vulnerable lab</div>
-  </div>
-  <div class="content" id="guideContent">
-    <!-- intro text: full guide as per provided steps, each command block copyable -->
-    <div class="step-section">
-      <div class="section-header"><h2>1. Verify & Start Required Services</h2></div>
-      <div class="step-body">
-        <p>DVWA requires <strong>Apache, MySQL/MariaDB and PHP</strong>. Check and start them:</p>
-        <div class="code-wrapper"><pre>sudo systemctl status apache2</pre></div>
-        <div class="code-wrapper"><pre>sudo systemctl status mysql</pre></div>
-        <p>If inactive, start them:</p>
-        <div class="code-wrapper"><pre>sudo systemctl start apache2</pre></div>
-        <div class="code-wrapper"><pre>sudo systemctl start mysql</pre></div>
-        <div class="why-box"><strong>Why:</strong> Apache serves DVWA web application; MySQL stores DVWA data and user accounts.</div>
-      </div>
-    </div>
 
-    <div class="step-section">
-      <div class="section-header"><h2>2. Move to Web Root Directory</h2></div>
-      <div class="step-body">
-        <div class="code-wrapper"><pre>cd /var/www/html</pre></div>
-        <div class="why-box"><strong>Why:</strong> Apache serves websites from <code>/var/www/html</code> by default. Installing DVWA here makes it accessible via browser.</div>
-      </div>
-    </div>
+      .hero p {
+        font-size: 1rem;
+        color: #6b7280;
+        margin-bottom: 0.5rem;
+      }
 
-    <div class="step-section">
-      <div class="section-header"><h2>3. Clone DVWA Repository</h2></div>
-      <div class="step-body">
-        <div class="code-wrapper"><pre>sudo git clone https://github.com/digininja/DVWA.git</pre></div>
-        <p>Verify:</p>
-        <div class="code-wrapper"><pre>ls</pre></div>
-        <div class="why-box"><strong>Why:</strong> Downloads the latest DVWA source code from GitHub.</div>
-      </div>
-    </div>
+      .breadcrumb {
+        font-size: 0.9rem;
+        color: #9ca3af;
+      }
 
-    <div class="step-section">
-      <div class="section-header"><h2>4. Set Appropriate Permissions</h2></div>
-      <div class="step-body">
-        <p>Safer than 777 — use ownership and restrictive permissions:</p>
-        <div class="code-wrapper"><pre>sudo chown -R www-data:www-data DVWA</pre></div>
-        <div class="code-wrapper"><pre>sudo chmod -R 755 DVWA</pre></div>
-        <p>Some directories require write access for DVWA features:</p>
-        <div class="code-wrapper"><pre>sudo chmod -R 777 DVWA/hackable/uploads</pre></div>
-        <div class="code-wrapper"><pre>sudo chmod -R 777 DVWA/config</pre></div>
-        <div class="why-box"><strong>Why:</strong> Apache runs as <code>www-data</code> user. <code>755</code> grants necessary access; upload/config folders need write permissions for vulnerable functionality.</div>
-      </div>
-    </div>
+      /* Table of Contents */
+      .toc {
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        border-radius: 0.5rem;
+      }
 
-    <div class="step-section">
-      <div class="section-header"><h2>5. Configure DVWA — Create Config File</h2></div>
-      <div class="step-body">
-        <div class="code-wrapper"><pre>cd DVWA/config</pre></div>
-        <div class="code-wrapper"><pre>cp config.inc.php.dist config.inc.php</pre></div>
-        <div class="code-wrapper"><pre>ls</pre></div>
-        <div class="why-box"><strong>Why:</strong> DVWA uses <code>config.inc.php</code> for database connection settings.</div>
-      </div>
-    </div>
+      .toc h2 {
+        font-size: 0.95rem;
+        color: #111827;
+        margin-bottom: 1rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
 
-    <div class="step-section">
-      <div class="section-header"><h2>6. Edit DVWA Configuration</h2></div>
-      <div class="step-body">
-        <p>Open config file:</p>
-        <div class="code-wrapper"><pre>nano config.inc.php</pre></div>
-        <p>Locate database settings and adjust credentials:</p>
-        <div class="code-wrapper"><pre>$_DVWA['db_server'] = '127.0.0.1';
+      .toc ul {
+        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 0.5rem;
+      }
+
+      .toc li {
+        padding: 0;
+      }
+
+      .toc a {
+        color: #3b82f6;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: color 0.2s;
+        display: block;
+        padding: 0.3rem 0;
+      }
+
+      .toc a:hover {
+        color: #2563eb;
+        text-decoration: underline;
+      }
+
+      /* Main Content */
+      .step {
+        margin-bottom: 2.5rem;
+        scroll-margin-top: 6rem;
+      }
+
+      .step h2 {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #111827;
+        margin-bottom: 0.8rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #e5e7eb;
+      }
+
+      .step p {
+        margin-bottom: 1rem;
+        color: #374151;
+        line-height: 1.7;
+      }
+
+      .step strong {
+        color: #111827;
+        font-weight: 600;
+      }
+
+      /* Code Blocks */
+      .code-block {
+        position: relative;
+        margin: 1.2rem 0;
+        border-radius: 0.5rem;
+        overflow: hidden;
+      }
+
+      .code-block pre {
+        background: #1f2937;
+        color: #f3f4f6;
+        padding: 1rem;
+        overflow-x: auto;
+        font-family: "SF Mono", Monaco, "Fira Code", "Cascadia Code", monospace;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        margin: 0;
+        border: 1px solid #374151;
+        border-radius: 0.5rem;
+      }
+
+      .copy-btn {
+        position: absolute;
+        top: 0.75rem;
+        right: 0.75rem;
+        background: #3b82f6;
+        color: white;
+        border: none;
+        padding: 0.4rem 0.8rem;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        z-index: 10;
+      }
+
+      .copy-btn:hover {
+        background: #2563eb;
+        transform: translateY(-1px);
+      }
+
+      .copy-btn.copied {
+        background: #10b981;
+      }
+
+      /* Info Boxes */
+      .info-box {
+        background: #eff6ff;
+        border-left: 4px solid #3b82f6;
+        padding: 1rem;
+        margin: 1.2rem 0;
+        border-radius: 0.375rem;
+        font-size: 0.95rem;
+        line-height: 1.6;
+      }
+
+      .warning-box {
+        background: #fef2f2;
+        border-left: 4px solid #ef4444;
+        padding: 1rem;
+        margin: 1.2rem 0;
+        border-radius: 0.375rem;
+        font-size: 0.95rem;
+      }
+
+      .success-box {
+        background: #f0fdf4;
+        border-left: 4px solid #10b981;
+        padding: 1rem;
+        margin: 1.2rem 0;
+        border-radius: 0.375rem;
+        font-size: 0.95rem;
+      }
+
+      /* Inline Code */
+      code {
+        background: #f3f4f6;
+        color: #1f2937;
+        padding: 0.2rem 0.4rem;
+        border-radius: 0.25rem;
+        font-family: monospace;
+        font-size: 0.9em;
+      }
+
+      pre code {
+        background: none;
+        color: inherit;
+        padding: 0;
+      }
+
+      /* Footer */
+      footer {
+        border-top: 1px solid #e5e7eb;
+        padding: 2rem 0 1rem;
+        margin-top: 3rem;
+        text-align: center;
+        color: #6b7280;
+        font-size: 0.9rem;
+      }
+
+      footer a {
+        color: #3b82f6;
+        text-decoration: none;
+      }
+
+      footer a:hover {
+        text-decoration: underline;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 640px) {
+        .wrapper {
+          padding: 0 1rem;
+        }
+
+        .hero h1 {
+          font-size: 1.5rem;
+        }
+
+        .hero p,
+        .breadcrumb {
+          font-size: 0.95rem;
+        }
+
+        .toc ul {
+          grid-template-columns: 1fr;
+        }
+
+        .step h2 {
+          font-size: 1.25rem;
+        }
+
+        .code-block pre {
+          font-size: 0.8rem;
+          padding: 0.75rem;
+        }
+
+        .copy-btn {
+          padding: 0.3rem 0.6rem;
+          font-size: 0.75rem;
+          top: 0.5rem;
+          right: 0.5rem;
+        }
+      }
+
+      /* Accessibility */
+      a:focus {
+        outline: 2px solid #3b82f6;
+        outline-offset: 2px;
+      }
+
+      button:focus {
+        outline: 2px solid #3b82f6;
+        outline-offset: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="wrapper">
+        <a href="#" class="logo">DVWA Setup</a>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+      <div class="wrapper">
+        <!-- Hero Section -->
+        <section class="hero">
+          <h1>DVWA Installation Guide</h1>
+          <p>Complete setup for Ubuntu & Kali Linux</p>
+          <div class="breadcrumb">
+            13 easy steps • 10-15 minutes • All commands copyable
+          </div>
+        </section>
+
+        <!-- Table of Contents -->
+        <nav class="toc">
+          <h2>Quick Navigation</h2>
+          <ul>
+            <li><a href="#step1">1. Verify Services</a></li>
+            <li><a href="#step2">2. Web Root Directory</a></li>
+            <li><a href="#step3">3. Clone DVWA</a></li>
+            <li><a href="#step4">4. Set Permissions</a></li>
+            <li><a href="#step5">5. Create Config</a></li>
+            <li><a href="#step6">6. Edit Config</a></li>
+            <li><a href="#step7">7. Access MySQL</a></li>
+            <li><a href="#step8">8. Create Database</a></li>
+            <li><a href="#step9">9. Configure PHP</a></li>
+            <li><a href="#step10">10. Restart Apache</a></li>
+            <li><a href="#step11">11. Verify PHP</a></li>
+            <li><a href="#step12">12. Open Browser</a></li>
+            <li><a href="#step13">13. Login</a></li>
+          </ul>
+        </nav>
+
+        <!-- Step 1 -->
+        <section id="step1" class="step">
+          <h2>1. Verify & Start Required Services</h2>
+          <p>
+            DVWA needs three services running: Apache, MySQL/MariaDB, and PHP.
+            Check their status:
+          </p>
+
+          <div class="code-block">
+            <pre><code>sudo systemctl status apache2</code></pre>
+            <button class="copy-btn">Copy</button>
+          </div>
+
+          <div class="code-block">
+            <pre><code>sudo systemctl status mysql</code></pre>
+            <button class="copy-btn">Copy</button>
+          </div>
+
+          <p>If they show "inactive", start them:</p>
+
+          <div class="code-block">
+            <pre><code>sudo systemctl start apache2
+sudo systemctl start mysql</code></pre>
+            <button class="copy-btn">Copy</button>
+          </div>
+
+          <div class="info-box">
+            <strong>Why?</strong> Apache serves the DVWA interface, MySQL stores
+            data and user accounts.
+          </div>
+        </section>
+
+        <!-- Step 2 -->
+        <section id="step2" class="step">
+          <h2>2. Navigate to Web Root Directory</h2>
+          <p>
+            Apache serves websites from <code>/var/www/html</code> by default:
+          </p>
+
+          <div class="code-block">
+            <pre><code>cd /var/www/html</code></pre>
+            <button class="copy-btn">Copy</button>
+          </div>
+
+          <div class="info-box">
+            <strong>Why?</strong> This makes DVWA accessible at
+            <code>http://localhost/DVWA</code>
+          </div>
+        </section>
+
+        <!-- Step 3 -->
+        <section id="step3" class="step">
+          <h2>3. Clone DVWA Repository</h2>
+          <p>Download the latest DVWA source from GitHub:</p>
+
+          <div class="code-block">
+            <pre><code>sudo git clone https://github.com/digininja/DVWA.git</code></pre>
+            <button class="copy-btn">Copy</button>
+          </div>
+
+          <p>Verify:</p>
+
+          <div class="code-block">
+            <pre><code>ls</code></pre>
+            <button class="copy-btn">Copy</button>
+          </div>
+
+          <div class="success-box">
+            <strong>✓ Expected:</strong> You should see a "DVWA" folder.
+          </div>
+        </section>
+
+        <!-- Step 4 -->
+        <section id="step4" class="step">
+          <h2>4. Set File Permissions</h2>
+          <p>
+            Apache runs as <code>www-data</code> user. Set proper ownership and
+            permissions:
+          </p>
+
+          <div class="code-block">
+            <pre><code>sudo chown -R www-data:www-data DVWA
+sudo chmod -R 755 DVWA</code></pre>
+            <button class="copy-btn">Copy</button>
+          </div>
+
+          <p>Some directories need write access:</p>
+
+          <div class="code-block">
+            <pre><code>sudo chmod -R 777 DVWA/hackable/uploads
+sudo chmod -R 777 DVWA/config</code></pre>
+            <button class="copy-btn">Copy</button>
+          </div>
+
+          <div class="info-box">
+            <strong>Why?</strong> Proper permissions ensure Apache can read and
+            write files.
+          </div>
+        </section>
+
+        <!-- Step 5 -->
+        <section id="step5" class="step">
+          <h2>5. Create Config File</h2>
+          <p>DVWA comes with a template file that needs to be copied:</p>
+
+          <div class="code-block">
+            <pre><code>cd DVWA/config
+cp config.inc.php.dist config.inc.php</code></pre>
+            <button class="copy-btn">Copy</button>
+          </div>
+
+          <p>Verify:</p>
+
+          <div class="code-block">
+            <pre><code>ls</code></pre>
+            <button class="copy-btn">Copy</button>
+          </div>
+        </section>
+
+        <!-- Step 6 -->
+        <section id="step6" class="step">
+          <h2>6. Edit Configuration File</h2>
+          <p>Open and configure the database settings:</p>
+
+          <div class="code-block">
+            <pre><code>sudo nano config.inc.php</code></pre>
+            <button class="copy-btn">Copy</button>
+          </div>
+
+          <p>Find and verify these lines:</p>
+
+          <div class="code-block">
+            <pre><code>$_DVWA['db_server'] = '127.0.0.1';
 $_DVWA['db_database'] = 'dvwa';
 $_DVWA['db_user'] = 'dvwa';
-$_DVWA['db_password'] = 'password';</pre></div>
-        <p>Save with <code>CTRL + O</code>, then <code>ENTER</code>, exit with <code>CTRL + X</code>.</p>
-        <div class="why-box"><strong>Why:</strong> DVWA must know how to connect to MySQL with correct credentials.</div>
+$_DVWA['db_password'] = 'password';</code></pre>
+            <button class="copy-btn">Copy</button>
+          </div>
+
+          <p>
+            To save: <code>CTRL + O</code> → <code>ENTER</code> →
+            <code>CTRL + X</code>
+          </p>
+
+          <div class="info-box">
+            <strong>Tip:</strong> These default credentials will be created in
+            the next steps.
+          </div>
+        </section>
+
+        <!-- Step 7 -->
+        <section id="step7" class="step">
+          <h2>7. Access MySQL</h2>
+          <p>Connect to MySQL as root to create the DVWA database:</p>
+
+          <div class="code-block">
+            <pre><code>mysql -u root -p</code></pre>
+            <button class="copy-btn">Copy</button>
+          </div>
+
+          <p>Enter your MySQL root password when prompted.</p>
+
+          <div class="info-box">
+            <strong>Note:</strong> If just installed, the password might be
+            empty—just press ENTER.
+          </div>
+        </section>
+
+        <!-- Step 8 -->
+        <section id="step8" class="step">
+          <h2>8. Create Database & User</h2>
+          <p>Inside the MySQL prompt, run these SQL commands:</p>
+
+          <div class="code-block">
+            <pre><code>CREATE DATABASE dvwa;
+CREATE USER 'dvwa'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON dvwa.* TO 'dvwa'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;</code></pre>
+            <button class="copy-btn">Copy</button>
+          </div>
+
+          <div class="success-box">
+            <strong>✓ Done!</strong> DVWA now has its own database and user.
+          </div>
+        </section>
+
+        <!-- Step 9 -->
+        <section id="step9" class="step">
+          <h2>9. Configure PHP</h2>
+          <p>DVWA requires specific PHP settings:</p>
+
+          <div class="code-block">
+            <pre><code>sudo nano /etc/php/8.2/apache2/php.ini</code></pre>
+            <button class="copy-btn">Copy</button>
+          </div>
+
+          <p>Find and set these (use <code>CTRL + W</code> to search):</p>
+
+          <div class="code-block">
+            <pre><code>allow_url_include = On
+display_errors = On</code></pre>
+            <button class="copy-btn">Copy</button>
+          </div>
+
+          <p>
+            Save: <code>CTRL + O</code> → <code>ENTER</code> →
+            <code>CTRL + X</code>
+          </p>
+
+          <div class="warning-box">
+            <strong>⚠ Security Warning:</strong> These settings are intentional
+            for DVWA's vulnerable nature. Never use on production servers.
+          </div>
+        </section>
+
+        <!-- Step 10 -->
+        <section id="step10" class="step">
+          <h2>10. Restart Apache</h2>
+          <p>Apply PHP configuration changes:</p>
+
+          <div class="code-block">
+            <pre><code>sudo systemctl restart apache2
+sudo systemctl status apache2</code></pre>
+            <button class="copy-btn">Copy</button>
+          </div>
+
+          <div class="success-box">
+            <strong>✓ Success!</strong> Apache should show "active (running)".
+          </div>
+        </section>
+
+        <!-- Step 11 -->
+        <section id="step11" class="step">
+          <h2>11. Verify PHP Modules</h2>
+          <p>Check that required PHP modules are installed:</p>
+
+          <div class="code-block">
+            <pre><code>php -m</code></pre>
+            <button class="copy-btn">Copy</button>
+          </div>
+
+          <p>
+            Look for: <code>mysqli</code>, <code>gd</code>, <code>curl</code>,
+            <code>openssl</code>
+          </p>
+
+          <p>If missing, install them:</p>
+
+          <div class="code-block">
+            <pre><code>sudo apt install php-mysqli php-gd php-curl php-openssl
+sudo systemctl restart apache2</code></pre>
+            <button class="copy-btn">Copy</button>
+          </div>
+        </section>
+
+        <!-- Step 12 -->
+        <section id="step12" class="step">
+          <h2>12. Open DVWA in Browser</h2>
+          <p>Navigate to:</p>
+
+          <div class="code-block">
+            <pre><code>http://localhost/DVWA</code></pre>
+            <button class="copy-btn">Copy</button>
+          </div>
+
+          <p>Or from another computer:</p>
+
+          <div class="code-block">
+            <pre><code>http://YOUR_SERVER_IP/DVWA</code></pre>
+            <button class="copy-btn">Copy</button>
+          </div>
+
+          <p>
+            Click <strong>"Create / Reset Database"</strong> to initialize
+            tables.
+          </p>
+
+          <div class="success-box">
+            <strong>✓ Great!</strong> DVWA is now installed and ready.
+          </div>
+        </section>
+
+        <!-- Step 13 -->
+        <section id="step13" class="step">
+          <h2>13. Log In to DVWA</h2>
+          <p>Use the default credentials:</p>
+
+          <div class="code-block">
+            <pre><code>Username: admin
+Password: password</code></pre>
+            <button class="copy-btn">Copy</button>
+          </div>
+
+          <div class="warning-box">
+            <strong>Important:</strong> Change these credentials after login for
+            practice scenarios.
+          </div>
+        </section>
+
+        <!-- Quick Reference -->
+        <section
+          class="step"
+          style="
+            background: #f9fafb;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin-top: 3rem;
+            border: 1px solid #e5e7eb;
+          "
+        >
+          <h2 style="border: none; margin-bottom: 1rem">Quick Reference</h2>
+
+          <p><strong>Check Service Status:</strong></p>
+          <div class="code-block">
+            <pre><code>sudo systemctl status apache2
+sudo systemctl status mysql</code></pre>
+            <button class="copy-btn">Copy</button>
+          </div>
+
+          <p><strong>Restart Services:</strong></p>
+          <div class="code-block">
+            <pre><code>sudo systemctl restart apache2
+sudo systemctl restart mysql</code></pre>
+            <button class="copy-btn">Copy</button>
+          </div>
+
+          <p><strong>Auto-Start on Boot:</strong></p>
+          <div class="code-block">
+            <pre><code>sudo systemctl enable apache2
+sudo systemctl enable mysql</code></pre>
+            <button class="copy-btn">Copy</button>
+          </div>
+
+          <p><strong>View Apache Errors:</strong></p>
+          <div class="code-block">
+            <pre><code>sudo tail -f /var/log/apache2/error.log</code></pre>
+            <button class="copy-btn">Copy</button>
+          </div>
+        </section>
       </div>
-    </div>
+    </main>
 
-    <div class="step-section">
-      <div class="section-header"><h2>7. Access MySQL</h2></div>
-      <div class="step-body">
-        <div class="code-wrapper"><pre>mysql -u root -p</pre></div>
-        <div class="why-box"><strong>Why:</strong> Needed to create DVWA database and user.</div>
-      </div>
-    </div>
-
-    <div class="step-section">
-      <div class="section-header"><h2>8. Create Database & User</h2></div>
-      <div class="step-body">
-        <p>Run the following SQL statements inside MySQL prompt:</p>
-        <div class="code-wrapper"><pre>CREATE DATABASE dvwa;</pre></div>
-        <div class="code-wrapper"><pre>CREATE USER 'dvwa'@'localhost' IDENTIFIED BY 'password';</pre></div>
-        <div class="code-wrapper"><pre>GRANT ALL PRIVILEGES ON dvwa.* TO 'dvwa'@'localhost';</pre></div>
-        <div class="code-wrapper"><pre>FLUSH PRIVILEGES;</pre></div>
-        <div class="code-wrapper"><pre>EXIT;</pre></div>
-        <div class="why-box"><strong>Why:</strong> DVWA needs its own database and dedicated MySQL account.</div>
-      </div>
-    </div>
-
-    <div class="step-section">
-      <div class="section-header"><h2>9. Configure PHP (php.ini)</h2></div>
-      <div class="step-body">
-        <p>Locate PHP config (adjust version if needed, e.g., 8.2):</p>
-        <div class="code-wrapper"><pre>cd /etc/php/8.2/apache2</pre></div>
-        <div class="code-wrapper"><pre>sudo nano php.ini</pre></div>
-        <p>Set these directives (required for DVWA vulnerabilities):</p>
-        <div class="code-wrapper"><pre>allow_url_include = On
-display_errors = On</pre></div>
-        <div class="why-box"><strong>Why:</strong> DVWA intentionally demonstrates web vulnerabilities; some exercises need these PHP settings.</div>
-      </div>
-    </div>
-
-    <div class="step-section">
-      <div class="section-header"><h2>10. Restart Apache</h2></div>
-      <div class="step-body">
-        <div class="code-wrapper"><pre>sudo systemctl restart apache2</pre></div>
-        <div class="code-wrapper"><pre>sudo systemctl status apache2</pre></div>
-        <div class="why-box"><strong>Why:</strong> Apache must reload the updated PHP configuration.</div>
-      </div>
-    </div>
-
-    <div class="step-section">
-      <div class="section-header"><h2>11. Verify PHP Modules</h2></div>
-      <div class="step-body">
-        <div class="code-wrapper"><pre>php -m</pre></div>
-        <p>Important modules: <code>mysqli</code>, <code>gd</code>, <code>curl</code>, <code>openssl</code>. If missing, install:</p>
-        <div class="code-wrapper"><pre>sudo apt install php-mysqli php-gd php-curl</pre></div>
-        <div class="code-wrapper"><pre>sudo systemctl restart apache2</pre></div>
-        <div class="why-box"><strong>Why:</strong> DVWA requires several PHP extensions for full functionality.</div>
-      </div>
-    </div>
-
-    <div class="step-section">
-      <div class="section-header"><h2>12. Open DVWA in Browser</h2></div>
-      <div class="step-body">
-        <p>Navigate to:</p>
-        <div class="code-wrapper"><pre>http://localhost/DVWA</pre></div>
-        <p>or</p>
-        <div class="code-wrapper"><pre>http://&lt;server-ip&gt;/DVWA</pre></div>
-        <p>Click the <strong>Create / Reset Database</strong> button on the DVWA setup page.</p>
-        <div class="why-box"><strong>Why:</strong> DVWA automatically creates its tables and initial data.</div>
-      </div>
-    </div>
-
-    <div class="step-section">
-      <div class="section-header"><h2>13. Default Login</h2></div>
-      <div class="step-body">
-        <div class="code-wrapper"><pre>Username: admin
-Password: password</pre></div>
-      </div>
-    </div>
-
-    <!-- Useful Verification Commands -->
-    <div class="step-section">
-      <div class="section-header"><h2>🔍 Useful Verification Commands</h2></div>
-      <div class="step-body">
-        <div class="code-wrapper"><pre>sudo systemctl status apache2</pre></div>
-        <div class="code-wrapper"><pre>sudo systemctl status mysql</pre></div>
-        <div class="code-wrapper"><pre>php -v</pre></div>
-        <div class="code-wrapper"><pre>php -m</pre></div>
-        <div class="code-wrapper"><pre>ls -la /var/www/html/DVWA</pre></div>
-        <div class="code-wrapper"><pre>sudo tail -f /var/log/apache2/error.log</pre></div>
-        <div class="code-wrapper"><pre>sudo journalctl -u mysql -f</pre></div>
-      </div>
-    </div>
-
-    <!-- post-reboot & service management -->
-    <div class="step-section">
-      <div class="section-header"><h2>🔁 1. Restart services after PC reboot (critical for DVWA)</h2></div>
-      <div class="step-body">
-        <p>After rebooting, manually start Apache & MySQL if not auto-started:</p>
-        <div class="code-wrapper"><pre>sudo systemctl start apache2</pre></div>
-        <div class="code-wrapper"><pre>sudo systemctl start mysql</pre></div>
-        <div class="code-wrapper"><pre>sudo systemctl status apache2</pre></div>
-        <div class="code-wrapper"><pre>sudo systemctl status mysql</pre></div>
-        <div class="why-box"><strong>Why:</strong> Apache must be running to serve DVWA, MySQL for database access.</div>
-      </div>
-    </div>
-
-    <div class="step-section">
-      <div class="section-header"><h2>⚙️ 2. Enable auto-start on boot (recommended)</h2></div>
-      <div class="step-body">
-        <div class="code-wrapper"><pre>sudo systemctl enable apache2</pre></div>
-        <div class="code-wrapper"><pre>sudo systemctl enable mysql</pre></div>
-        <div class="why-box"><strong>Why:</strong> Services start automatically on system boot — no manual work after each restart.</div>
-      </div>
-    </div>
-
-    <div class="step-section">
-      <div class="section-header"><h2>🔄 3. Restart services without rebooting PC</h2></div>
-      <div class="step-body">
-        <div class="code-wrapper"><pre>sudo systemctl restart apache2</pre></div>
-        <div class="code-wrapper"><pre>sudo systemctl restart mysql</pre></div>
-        <div class="why-box"><strong>Why:</strong> Applies configuration changes immediately without full system reboot.</div>
-      </div>
-    </div>
-
-    <div class="step-section">
-      <div class="section-header"><h2>💻 4. Full system reboot (PC restart via terminal)</h2></div>
-      <div class="step-body">
-        <div class="code-wrapper"><pre>sudo reboot</pre></div>
-        <p>or</p>
-        <div class="code-wrapper"><pre>sudo shutdown -r now</pre></div>
-        <div class="why-box"><strong>Why:</strong> Reloads kernel, services, and system state completely.</div>
-      </div>
-    </div>
-
-    <div class="step-section">
-      <div class="section-header"><h2>✅ 5. After reboot checklist for DVWA</h2></div>
-      <div class="step-body">
-        <div class="code-wrapper"><pre>sudo systemctl status apache2</pre></div>
-        <div class="code-wrapper"><pre>sudo systemctl status mysql</pre></div>
-        <p>Then open: <code>http://localhost/DVWA</code></p>
-        <div class="why-box"><strong>Why:</strong> Quick verification that services are running after a reboot.</div>
-      </div>
-    </div>
-
-    <div class="note-tip">
-      💡 <strong>Pro tip:</strong> The setup above mirrors the official DVWA workflow. If you want a <strong>“DVWA auto-start + zero manual setup after reboot” hardened setup</strong> so everything runs instantly like a server, consider creating systemd timers or adding service checks — this guide covers the essential reliable steps.
-    </div>
-
-    <div class="note-tip">
-      ⚠️ <strong>Security note:</strong> DVWA is <strong>intentionally vulnerable</strong>. Only run it in isolated lab environments, never on production or public networks. Change default credentials after installation for practice scenarios.
-    </div>
+    <!-- Footer -->
     <footer>
-      🛠️ DVWA Installation Guide — all commands are verified & copyable.<br>
-      Click <strong>📋 Copy</strong> on any code block to instantly copy the command. Perfect for Ubuntu/Kali Linux.
+      <div class="wrapper">
+        <p>
+          DVWA Installation Guide •
+          <a
+            href="https://github.com/digininja/DVWA"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Official DVWA Repository</a
+          >
+        </p>
+        <p style="margin-top: 0.5rem; color: #9ca3af; font-size: 0.85rem">
+          A beginner-friendly guide to learning web security through
+          intentionally vulnerable applications
+        </p>
+      </div>
     </footer>
-  </div>
-</div>
 
-<script>
-  (function() {
-    // Add copy buttons to all pre blocks inside .content (excluding those nested inside note-tip if needed but all fine)
-    const contentArea = document.getElementById('guideContent');
-    if (!contentArea) return;
-    const preBlocks = contentArea.querySelectorAll('pre');
-    
-    preBlocks.forEach(pre => {
-      // avoid duplicate wrapping if script runs multiple times
-      if (pre.parentElement && pre.parentElement.classList.contains('code-wrapper')) {
-        // already wrapped? skip re-wrapping but ensure button exists
-        const wrapper = pre.parentElement;
-        if (wrapper.querySelector('.copy-btn')) return;
-        addButtonToWrapper(wrapper, pre);
-        return;
-      }
-      // wrap each pre with .code-wrapper
-      const wrapper = document.createElement('div');
-      wrapper.className = 'code-wrapper';
-      pre.parentNode.insertBefore(wrapper, pre);
-      wrapper.appendChild(pre);
-      addButtonToWrapper(wrapper, pre);
-    });
+    <script>
+      document.querySelectorAll(".copy-btn").forEach((button) => {
+        button.addEventListener("click", async function (e) {
+          e.preventDefault();
+          const codeBlock = this.parentElement.querySelector("pre code");
+          const text = codeBlock.textContent;
 
-    function addButtonToWrapper(wrapper, preElement) {
-      const btn = document.createElement('button');
-      btn.className = 'copy-btn';
-      btn.innerHTML = '📋 Copy';
-      btn.setAttribute('aria-label', 'Copy command');
-      wrapper.style.position = 'relative';
-      wrapper.appendChild(btn);
+          try {
+            await navigator.clipboard.writeText(text);
+            const originalText = this.textContent;
+            this.textContent = "✓ Copied!";
+            this.classList.add("copied");
 
-      btn.addEventListener('click', async (e) => {
-        e.stopPropagation();
-        // get the raw text from pre: we want to copy exactly what user sees
-        let textToCopy = preElement.innerText;
-        // preserve line breaks and formatting
-        try {
-          await navigator.clipboard.writeText(textToCopy);
-          // visual feedback
-          const originalText = btn.innerHTML;
-          btn.innerHTML = '✓ Copied!';
-          btn.classList.add('copied');
-          setTimeout(() => {
-            btn.innerHTML = originalText;
-            btn.classList.remove('copied');
-          }, 1800);
-        } catch (err) {
-          console.warn('Copy failed', err);
-          btn.innerHTML = '⚠️ Error';
-          setTimeout(() => {
-            btn.innerHTML = '📋 Copy';
-          }, 1000);
-        }
+            setTimeout(() => {
+              this.textContent = originalText;
+              this.classList.remove("copied");
+            }, 2000);
+          } catch (err) {
+            const textarea = document.createElement("textarea");
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textarea);
+
+            this.textContent = "✓ Copied!";
+            this.classList.add("copied");
+            setTimeout(() => {
+              this.textContent = "Copy";
+              this.classList.remove("copied");
+            }, 2000);
+          }
+        });
       });
-    }
-  })();
-</script>
-</body>
+    </script>
+  </body>
 </html>
