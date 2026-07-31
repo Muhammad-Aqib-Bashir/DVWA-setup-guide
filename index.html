@@ -8,13 +8,11 @@
       name="robots"
       content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
     />
-    <title>
-      DVWA Installation Guide for Ubuntu & Kali Linux – Step-by-Step Setup
-    </title>
+    <title>How to Install DVWA in Ubuntu or Kali - Copy Paste Cmds</title>
     <link rel="icon" href="./favicon.png" />
     <meta
       name="description"
-      content="Install DVWA on Ubuntu or Kali Linux in 10 minutes. Step-by-step guide covering Apache, MySQL, PHP setup with copyable commands. Ideal for beginners in web security and ethical hacking."
+      content="Install DVWA on Kali or Ubuntu Linux in few minutes, Default login credentials, copy-paste commands, and a troubleshooting guide for common setup errors — no Docker required."
     />
     <meta
       name="keywords"
@@ -30,13 +28,10 @@
     <!-- ── Open Graph (Facebook, LinkedIn, WhatsApp) ── -->
     <meta property="og:type" content="article" />
     <meta property="og:site_name" content="DVWA Setup Guide" />
-    <meta
-      property="og:title"
-      content="DVWA Installation Guide for Ubuntu & Kali Linux "
-    />
+    <meta property="og:title" content="How to Install DVWA in Ubuntu & Kali" />
     <meta
       property="og:description"
-      content="Complete step-by-step DVWA installation guide. Set up Apache, MySQL, and PHP on Ubuntu or Kali Linux in under 15 minutes with copyable terminal commands."
+      content="Complete DVWA installation guide for Ubuntu or Kali Linux — no Docker required. Default login credentials, copyable commands, and troubleshooting for common errors."
     />
     <meta
       property="og:url"
@@ -61,17 +56,14 @@
     <meta property="article:tag" content="Ethical Hacking" />
     <meta property="article:tag" content="Web Security" />
     <meta property="article:published_time" content="2026-06-03T00:00:00Z" />
-    <meta property="article:modified_time" content="2026-06-03T00:00:00Z" />
+    <meta property="article:modified_time" content="2026-08-01T00:00:00Z" />
 
     <!-- ── Twitter / X Card ── -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta
-      name="twitter:title"
-      content="DVWA Installation Guide for Ubuntu & Kali Linux "
-    />
+    <meta name="twitter:title" content="How to Install DVWA in Ubuntu & Kali" />
     <meta
       name="twitter:description"
-      content="Complete step-by-step DVWA setup guide with copyable commands. Apache, MySQL, and PHP configured in 15 minutes on Ubuntu or Kali Linux."
+      content="Complete DVWA setup guide for Ubuntu or Kali Linux — no Docker required. Default credentials, copyable commands, and troubleshooting included."
     />
     <meta
       name="twitter:image"
@@ -81,8 +73,8 @@
       name="twitter:image:alt"
       content="DVWA Installation Guide — Ubuntu and Kali Linux"
     />
-    <meta name="twitter:creator" content="@YourTwitterHandle" />
-    <meta name="twitter:site" content="@YourTwitterHandle" />
+    <meta name="twitter:creator" content="@mAqibBashir" />
+    <meta name="twitter:site" content="@mAqibBashir" />
 
     <!-- ── Additional SEO Signals ── -->
     <meta
@@ -107,7 +99,7 @@
           {
             "@type": "TechArticle",
             "@id": "https://muhammad-aqib-bashir.github.io/DVWA-setup-guide/#article",
-            "headline": "DVWA Installation Guide for Ubuntu & Kali Linux ",
+            "headline": "How to Install DVWA in Ubuntu & Kali",
             "description": "Complete step-by-step guide to install DVWA (Damn Vulnerable Web Application) on Ubuntu or Kali Linux. Covers Apache, MySQL, PHP setup with copyable terminal commands. Ideal for beginners in web security and ethical hacking.",
             "image": {
               "@type": "ImageObject",
@@ -157,7 +149,7 @@
           {
             "@type": "HowTo",
             "@id": "https://muhammad-aqib-bashir.github.io/DVWA-setup-guide/#howto",
-            "name": "How to Install DVWA on Ubuntu & Kali Linux",
+            "name": "How to Install DVWA in Ubuntu & Kali",
             "description": "Install the Damn Vulnerable Web Application (DVWA) on Ubuntu or Kali Linux for web security practice and ethical hacking training using this guide.",
             "image": "https://muhammad-aqib-bashir.github.io/DVWA-setup-guide/og-image.png",
             "totalTime": "PT15M",
@@ -408,6 +400,10 @@
         background: #ffffff;
         font-size: 16px;
       }
+      a {
+        color: #3b82f6;
+        transition: color 0.2s;
+      }
       .wrapper {
         max-width: 1280px;
         margin: 0 auto;
@@ -429,10 +425,19 @@
         align-items: center;
       }
       .logo {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
         font-size: 1.25rem;
         font-weight: 700;
         color: #3b82f6;
         text-decoration: none;
+      }
+      .logo-icon {
+        height: 28px;
+        width: 28px;
+        object-fit: contain;
+        flex-shrink: 0;
       }
       .github-btn {
         display: inline-flex;
@@ -465,7 +470,7 @@
       }
       .hero h1 {
         font-size: 2rem;
-        font-weight: 800;
+        font-weight: 700;
         margin-bottom: 0.5rem;
         color: #111827;
         line-height: 1.2;
@@ -589,6 +594,12 @@
         margin-bottom: 0.8rem;
         padding-bottom: 0.5rem;
         border-bottom: 2px solid #e5e7eb;
+      }
+      .step h3 {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #111827;
+        margin: 1.5rem 0 0.6rem;
       }
       .step p {
         margin-bottom: 1rem;
@@ -773,7 +784,14 @@
     <header>
       <div class="wrapper">
         <div class="header-content">
-          <a href="#" class="logo">DVWA Setup</a>
+          <a href="#" class="logo">
+            <img
+              src="./favicon.png"
+              alt="DVWA Installation Guide logo"
+              class="logo-icon"
+            />
+            DVWA Installation Guide
+          </a>
           <a
             href="https://github.com/Muhammad-Aqib-Bashir/DVWA-setup-guide"
             target="_blank"
@@ -806,26 +824,105 @@
     <main>
       <div class="wrapper">
         <section class="hero">
-          <h1>DVWA Installation Guide</h1>
-          <p>Complete setup for Ubuntu & Kali Linux</p>
-          <div class="breadcrumb">
-            13 easy steps • 10-15 minutes • All commands copyable
-          </div>
+          <h1>trust me! it works.</h1>
+          <p>
+            Hi, I'm
+            <a
+              href="https://muhammadaqibbashir.netlify.app?utm_source=DVWA-setup-guide"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="author-link"
+              >Muhammad Aqib Bashir</a
+            >, and I'm here to guide you through setting up
+            <a
+              href="https://github.com/digininja/DVWA"
+              target="_blank"
+              rel="noopener noreferrer"
+              >DVWA</a
+            >
+            on your local machine without using Docker.
+          </p>
         </section>
 
         <div class="main-layout">
           <aside class="sidebar-toc">
             <h2>Navigation</h2>
-            <ul id="sidebarList"></ul>
+            <ul id="sidebarList">
+              <li><a href="#troubleshooting">Troubleshooting</a></li>
+            </ul>
           </aside>
 
           <div class="content-area">
             <nav class="toc">
               <h2>Quick Navigation</h2>
-              <ul id="tocList"></ul>
+              <ul id="tocList">
+                <li><a href="#troubleshooting">Troubleshooting</a></li>
+              </ul>
             </nav>
 
             <div id="stepsContainer"></div>
+
+            <section class="step" id="troubleshooting">
+              <h2>Troubleshooting Common DVWA Errors</h2>
+
+              <h3>DVWA Shows a 404 Not Found Error</h3>
+              <p>
+                A 404 usually means Apache isn't serving files from the DVWA
+                folder yet. Confirm you cloned DVWA directly into
+                <code>/var/www/html</code> so the URL matches
+                <code>http://localhost/DVWA</code> exactly (folder names are
+                case-sensitive on Linux), then check Apache is actually running:
+              </p>
+              <div class="code-block">
+                <pre><code>sudo systemctl status apache2</code></pre>
+              </div>
+
+              <h3>Installing DVWA Without Docker</h3>
+              <p>
+                This guide installs DVWA natively using Apache, MySQL, and PHP —
+                no Docker or containers required. DVWA does also ship an
+                official Dockerfile if you'd rather containerize it, but every
+                step above works on a plain Ubuntu or Kali install.
+              </p>
+
+              <h3>
+                Still Not Working After Setup? (Troubleshooting Checklist)
+              </h3>
+              <p>
+                If DVWA still isn't loading correctly after following the steps
+                above, check these in order:
+              </p>
+              <ul
+                style="
+                  margin: 0 0 1rem 1.5rem;
+                  color: #374151;
+                  line-height: 1.8;
+                "
+              >
+                <li>
+                  <strong>Blank white page:</strong> enable PHP error display
+                  (Step 9) and check
+                  <code>sudo tail -f /var/log/apache2/error.log</code>
+                </li>
+                <li>
+                  <strong>"Unable to connect to the database":</strong>
+                  re-check <code>config.inc.php</code> matches the MySQL
+                  username and password created in Step 8
+                </li>
+                <li>
+                  <strong>PHP module errors:</strong> re-run Step 11 to install
+                  any missing modules, then restart Apache
+                </li>
+                <li>
+                  <strong>Permission denied errors:</strong> re-apply the
+                  ownership commands from Step 4
+                </li>
+                <li>
+                  <strong>Login page rejects admin/password:</strong> make sure
+                  you clicked "Create / Reset Database" first (Step 12)
+                </li>
+              </ul>
+            </section>
 
             <!-- Post-install CTA -->
             <div
@@ -1212,13 +1309,14 @@ sudo systemctl enable mysql</code></pre>
           afterCode: "<p>Or from another computer:</p>",
           moreBlocks: [{ code: "http://YOUR_SERVER_IP/DVWA" }],
           afterCode2:
-            '<p>Click <strong>"Create / Reset Database"</strong> to initialize tables.</p>',
+            '<h3>What Does "Create / Reset Database" Do?</h3><p>DVWA\'s <code>setup.php</code> page includes a <strong>"Create / Reset Database"</strong> button. Clicking it creates the MySQL tables DVWA needs to run (or wipes and recreates them if they already exist). You must click this once before logging in, and again any time you want to reset your progress.</p>',
           success: "<strong>✓ Great!</strong> DVWA is now installed and ready.",
         },
         {
           id: "step13",
-          title: "13. Log In to DVWA",
-          content: "<p>Use the default credentials:</p>",
+          title: "13. DVWA Default Login Credentials (admin / password)",
+          content:
+            "<p>The default DVWA login credentials are username <code>admin</code> and password <code>password</code>:</p>",
           codeBlocks: [{ code: "Username: admin\nPassword: password" }],
           warning:
             "<strong>Important:</strong> Change these credentials after login for practice scenarios.",
