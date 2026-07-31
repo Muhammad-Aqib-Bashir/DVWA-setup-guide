@@ -1,0 +1,672 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- ── Primary Meta ── -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="robots"
+      content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+    />
+    <title>DVWA Troubleshooting: Fix Common Setup Errors (Ubuntu & Kali)</title>
+    <link rel="icon" href="./favicon.png" />
+    <meta
+      name="description"
+      content="Fix common DVWA errors on Ubuntu and Kali Linux: 404 Not Found, database connection failures, blank pages, missing PHP modules, and permission errors — with exact fixes."
+    />
+    <meta
+      name="keywords"
+      content="DVWA troubleshooting, DVWA 404 error, DVWA database connection error, DVWA blank page, DVWA permission denied, DVWA setup errors, DVWA not working, DVWA Ubuntu error, DVWA Kali error"
+    />
+    <meta name="author" content="Muhammad Aqib Bashir" />
+    <meta name="theme-color" content="#3b82f6" />
+    <link
+      rel="canonical"
+      href="https://muhammad-aqib-bashir.github.io/DVWA-setup-guide/troubleshooting.html"
+    />
+
+    <!-- ── Open Graph (Facebook, LinkedIn, WhatsApp) ── -->
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="DVWA Setup Guide" />
+    <meta
+      property="og:title"
+      content="DVWA Troubleshooting: Fix Common Setup Errors"
+    />
+    <meta
+      property="og:description"
+      content="Fix common DVWA errors on Ubuntu and Kali Linux — 404s, database connection failures, blank pages, missing PHP modules, and permission errors."
+    />
+    <meta
+      property="og:url"
+      content="https://muhammad-aqib-bashir.github.io/DVWA-setup-guide/troubleshooting.html"
+    />
+    <meta
+      property="og:image"
+      content="https://muhammad-aqib-bashir.github.io/DVWA-setup-guide/og-image.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="DVWA Troubleshooting Guide — Ubuntu and Kali Linux"
+    />
+    <meta property="og:locale" content="en_US" />
+    <meta property="article:author" content="Muhammad Aqib Bashir" />
+    <meta property="article:section" content="Web Security" />
+    <meta property="article:tag" content="DVWA" />
+    <meta property="article:tag" content="Troubleshooting" />
+    <meta property="article:tag" content="Kali Linux" />
+    <meta property="article:tag" content="Ubuntu" />
+    <meta property="article:published_time" content="2026-07-31T00:00:00Z" />
+    <meta property="article:modified_time" content="2026-07-31T00:00:00Z" />
+
+    <!-- ── Twitter / X Card ── -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="DVWA Troubleshooting: Fix Common Setup Errors"
+    />
+    <meta
+      name="twitter:description"
+      content="Fix common DVWA errors on Ubuntu and Kali Linux — 404s, database connection failures, blank pages, and more."
+    />
+    <meta
+      name="twitter:image"
+      content="https://muhammad-aqib-bashir.github.io/DVWA-setup-guide/og-image.png"
+    />
+    <meta
+      name="twitter:image:alt"
+      content="DVWA Troubleshooting Guide — Ubuntu and Kali Linux"
+    />
+    <meta name="twitter:creator" content="@mAqibBashir" />
+    <meta name="twitter:site" content="@mAqibBashir" />
+
+    <!-- ── Additional SEO Signals ── -->
+    <meta
+      name="category"
+      content="Cybersecurity, Web Security, Ethical Hacking"
+    />
+    <meta name="coverage" content="Worldwide" />
+    <meta name="rating" content="general" />
+    <meta name="language" content="English" />
+    <meta name="revisit-after" content="30 days" />
+    <meta name="generator" content="Static HTML" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "TechArticle",
+            "@id": "https://muhammad-aqib-bashir.github.io/DVWA-setup-guide/troubleshooting.html#article",
+            "headline": "DVWA Troubleshooting: Fix Common Setup Errors",
+            "description": "Fixes for the most common DVWA setup errors on Ubuntu and Kali Linux, including 404 Not Found, database connection failures, blank pages, missing PHP modules, and permission errors.",
+            "image": {
+              "@type": "ImageObject",
+              "url": "https://muhammad-aqib-bashir.github.io/DVWA-setup-guide/og-image.png",
+              "width": 1200,
+              "height": 630
+            },
+            "url": "https://muhammad-aqib-bashir.github.io/DVWA-setup-guide/troubleshooting.html",
+            "datePublished": "2026-07-31",
+            "dateModified": "2026-07-31",
+            "author": {
+              "@type": "Person",
+              "@id": "https://github.com/Muhammad-Aqib-Bashir",
+              "name": "Muhammad Aqib Bashir",
+              "url": "https://github.com/Muhammad-Aqib-Bashir"
+            },
+            "publisher": {
+              "@type": "Person",
+              "name": "Muhammad Aqib Bashir",
+              "url": "https://github.com/Muhammad-Aqib-Bashir"
+            },
+            "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": "https://muhammad-aqib-bashir.github.io/DVWA-setup-guide/troubleshooting.html"
+            },
+            "isPartOf": {
+              "@type": "TechArticle",
+              "@id": "https://muhammad-aqib-bashir.github.io/DVWA-setup-guide/#article"
+            },
+            "articleSection": "Web Security",
+            "inLanguage": "en-US",
+            "proficiencyLevel": "Beginner"
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://muhammad-aqib-bashir.github.io/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "DVWA Setup Guide",
+                "item": "https://muhammad-aqib-bashir.github.io/DVWA-setup-guide/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Troubleshooting",
+                "item": "https://muhammad-aqib-bashir.github.io/DVWA-setup-guide/troubleshooting.html"
+              }
+            ]
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Why does DVWA show a 404 Not Found error?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "A 404 usually means Apache isn't serving files from the DVWA folder, or the folder wasn't cloned into /var/www/html. Confirm the folder path and capitalization match the URL exactly, and that Apache is running."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How do I fix 'Unable to connect to the database' in DVWA?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "This means the credentials in config.inc.php don't match the MySQL user you created. Re-check the db_user and db_password values against the CREATE USER command you ran in MySQL."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Can I install DVWA without Docker?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. DVWA can be installed natively with Apache, MySQL, and PHP on Ubuntu or Kali Linux without any Docker or container setup."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Why is DVWA showing a blank white page?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "A blank page usually means a PHP error is being silently suppressed. Enable display_errors in php.ini and check the Apache error log to see the underlying cause."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+
+    <!-- Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-Q8MJM8LBXM"
+    ></script>
+    <script src="./scripts/analytics.js"></script>
+
+    <!-- Shared styles (used by every page) -->
+    <link rel="stylesheet" href="./styles/index.css" />
+
+    <style>
+      /* Page-specific styles for the troubleshooting page (shared rules live in styles.css) */
+      .fix-list {
+        margin: 0 0 1rem 1.5rem;
+        color: #374151;
+        line-height: 1.8;
+      }
+      .quick-answer {
+        background: #f0fdf4;
+        border: 1px solid #bbf7d0;
+        border-radius: 0.5rem;
+        padding: 0.9rem 1.1rem;
+        margin: 0 0 1.2rem;
+        font-size: 0.95rem;
+      }
+      .quick-answer strong {
+        color: #065f46;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="wrapper">
+        <div class="header-content">
+          <a href="index.html" class="logo">
+            <img src="./favicon.png" alt="DVWA Setup logo" class="logo-icon" />
+            DVWA Setup Guide
+          </a>
+          <nav class="header-nav">
+            <a href="index.html">Install Guide</a>
+            <a href="troubleshooting.html" class="active">Troubleshooting</a>
+          </nav>
+          <a
+            href="https://github.com/Muhammad-Aqib-Bashir/DVWA-setup-guide"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="github-btn"
+          >
+            <svg
+              data-component="Octicon"
+              aria-hidden="true"
+              focusable="false"
+              class="octicon octicon-mark-github"
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+              fill="currentColor"
+              display="inline-block"
+              overflow="visible"
+              style="vertical-align: text-bottom"
+            >
+              <path
+                d="M10.226 17.284c-2.965-.36-5.054-2.493-5.054-5.256 0-1.123.404-2.336 1.078-3.144-.292-.741-.247-2.314.09-2.965.898-.112 2.111.36 2.83 1.01.853-.269 1.752-.404 2.853-.404 1.1 0 1.999.135 2.807.382.696-.629 1.932-1.1 2.83-.988.315.606.36 2.179.067 2.942.72.854 1.101 2 1.101 3.167 0 2.763-2.089 4.852-5.098 5.234.763.494 1.28 1.572 1.28 2.807v2.336c0 .674.561 1.056 1.235.786 4.066-1.55 7.255-5.615 7.255-10.646C23.5 6.188 18.334 1 11.978 1 5.62 1 .5 6.188.5 12.545c0 4.986 3.167 9.12 7.435 10.669.606.225 1.19-.18 1.19-.786V20.63a2.9 2.9 0 0 1-1.078.224c-1.483 0-2.359-.808-2.987-2.313-.247-.607-.517-.966-1.034-1.033-.27-.023-.359-.135-.359-.27 0-.27.45-.471.898-.471.652 0 1.213.404 1.797 1.235.45.651.921.943 1.483.943.561 0 .92-.202 1.437-.719.382-.381.674-.718.944-.943"
+              ></path>
+            </svg>
+            Star on GitHub
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="wrapper">
+        <section class="hero">
+          <a href="index.html" class="back-link"
+            >← Back to Installation Guide</a
+          >
+          <h1>DVWA Troubleshooting Guide</h1>
+          <p>Fixes for common DVWA setup errors on Ubuntu & Kali Linux</p>
+        </section>
+
+        <div class="main-layout">
+          <aside class="sidebar-toc">
+            <h2>Common Errors</h2>
+            <ul id="sidebarList">
+              <li><a href="#error-404">404 Not Found</a></li>
+              <li>
+                <a href="#error-db-connection">Database Connection Failed</a>
+              </li>
+              <li><a href="#error-blank-page">Blank White Page</a></li>
+              <li><a href="#error-php-modules">Missing PHP Modules</a></li>
+              <li><a href="#error-permissions">Permission Denied</a></li>
+              <li><a href="#error-login">Login Rejects admin/password</a></li>
+              <li><a href="#no-docker">DVWA Without Docker</a></li>
+              <li><a href="#full-checklist">Full Checklist</a></li>
+            </ul>
+          </aside>
+
+          <div class="content-area">
+            <nav class="toc">
+              <h2>Quick Navigation</h2>
+              <ul>
+                <li><a href="#error-404">404 Not Found</a></li>
+                <li>
+                  <a href="#error-db-connection">Database Connection Failed</a>
+                </li>
+                <li><a href="#error-blank-page">Blank White Page</a></li>
+                <li><a href="#error-php-modules">Missing PHP Modules</a></li>
+                <li><a href="#error-permissions">Permission Denied</a></li>
+                <li><a href="#error-login">Login Rejects admin/password</a></li>
+                <li><a href="#no-docker">DVWA Without Docker</a></li>
+                <li><a href="#full-checklist">Full Checklist</a></li>
+              </ul>
+            </nav>
+
+            <section class="step" id="error-404">
+              <h2>DVWA Shows a 404 Not Found Error</h2>
+              <div class="quick-answer">
+                <strong>Quick answer:</strong> Your DVWA folder path doesn't
+                match the URL, or Apache isn't running.
+              </div>
+              <p>
+                A 404 usually means Apache isn't serving files from the DVWA
+                folder yet. Confirm you cloned DVWA directly into
+                <code>/var/www/html</code> so the URL matches
+                <code>http://localhost/DVWA</code> exactly — folder names are
+                case-sensitive on Linux, so <code>dvwa</code> and
+                <code>DVWA</code> are different paths. Then confirm Apache is
+                actually running:
+              </p>
+              <div class="code-block">
+                <pre><code>sudo systemctl status apache2</code></pre>
+              </div>
+              <p>If it's inactive, start it:</p>
+              <div class="code-block">
+                <pre><code>sudo systemctl start apache2</code></pre>
+              </div>
+            </section>
+
+            <section class="step" id="error-db-connection">
+              <h2>"Unable to Connect to the Database" Error</h2>
+              <div class="quick-answer">
+                <strong>Quick answer:</strong> The credentials in
+                <code>config.inc.php</code> don't match your MySQL user.
+              </div>
+              <p>
+                This happens when the database name, username, or password in
+                <code>DVWA/config/config.inc.php</code> don't match what you
+                actually created in MySQL. Open the config file:
+              </p>
+              <div class="code-block">
+                <pre><code>sudo nano /var/www/html/DVWA/config/config.inc.php</code></pre>
+              </div>
+              <p>
+                And confirm these values exactly match the database, user, and
+                password you created earlier:
+              </p>
+              <div class="code-block">
+                <pre><code>$_DVWA['db_server'] = '127.0.0.1';
+$_DVWA['db_database'] = 'dvwa';
+$_DVWA['db_user'] = 'dvwa';
+$_DVWA['db_password'] = 'password';</code></pre>
+              </div>
+              <p>
+                If you're not sure the MySQL user exists, log back into MySQL
+                (<code>mysql -u root -p</code>) and re-run the
+                <code>CREATE USER</code> and
+                <code>GRANT ALL PRIVILEGES</code> commands from the install
+                guide.
+              </p>
+            </section>
+
+            <section class="step" id="error-blank-page">
+              <h2>DVWA Shows a Blank White Page</h2>
+              <div class="quick-answer">
+                <strong>Quick answer:</strong> A PHP error is being silently
+                suppressed — turn on error display to see it.
+              </div>
+              <p>
+                A blank page almost always means PHP hit a fatal error but isn't
+                displaying it. Enable error output in
+                <code>php.ini</code>:
+              </p>
+              <div class="code-block">
+                <pre><code>sudo nano /etc/php/8.2/apache2/php.ini</code></pre>
+              </div>
+              <p>Set (or confirm) this line, then save and restart Apache:</p>
+              <div class="code-block">
+                <pre><code>display_errors = On</code></pre>
+              </div>
+              <div class="code-block">
+                <pre><code>sudo systemctl restart apache2</code></pre>
+              </div>
+              <p>
+                Reload the page — the real error should now appear. You can also
+                check the log directly:
+              </p>
+              <div class="code-block">
+                <pre><code>sudo tail -f /var/log/apache2/error.log</code></pre>
+              </div>
+            </section>
+
+            <section class="step" id="error-php-modules">
+              <h2>Missing PHP Module Errors</h2>
+              <div class="quick-answer">
+                <strong>Quick answer:</strong> Install the missing module and
+                restart Apache.
+              </div>
+              <p>
+                DVWA needs <code>mysqli</code>, <code>gd</code>,
+                <code>curl</code>, and <code>openssl</code>. Check which are
+                installed:
+              </p>
+              <div class="code-block">
+                <pre><code>php -m</code></pre>
+              </div>
+              <p>Install anything missing, then restart Apache:</p>
+              <div class="code-block">
+                <pre><code>sudo apt install php-mysqli php-gd php-curl php-openssl
+sudo systemctl restart apache2</code></pre>
+              </div>
+            </section>
+
+            <section class="step" id="error-permissions">
+              <h2>Permission Denied Errors</h2>
+              <div class="quick-answer">
+                <strong>Quick answer:</strong> Apache (<code>www-data</code>)
+                doesn't own or can't write to the DVWA folder.
+              </div>
+              <p>
+                Re-apply ownership and permissions so Apache can read and write
+                DVWA's files, especially the upload and config directories:
+              </p>
+              <div class="code-block">
+                <pre><code>sudo chown -R www-data:www-data /var/www/html/DVWA
+sudo chmod -R 755 /var/www/html/DVWA
+sudo chmod -R 777 /var/www/html/DVWA/hackable/uploads
+sudo chmod -R 777 /var/www/html/DVWA/config</code></pre>
+              </div>
+            </section>
+
+            <section class="step" id="error-login">
+              <h2>Login Page Rejects admin / password</h2>
+              <div class="quick-answer">
+                <strong>Quick answer:</strong> You need to click "Create / Reset
+                Database" on <code>setup.php</code> first.
+              </div>
+              <p>
+                DVWA's default login is username <code>admin</code> and password
+                <code>password</code> — but the account only exists after the
+                database tables have been created. Visit
+                <code>http://localhost/DVWA/setup.php</code> and click
+                <strong>"Create / Reset Database"</strong>, then try logging in
+                again.
+              </p>
+            </section>
+
+            <section class="step" id="no-docker">
+              <h2>Installing DVWA Without Docker</h2>
+              <p>
+                The main install guide sets up DVWA natively using Apache,
+                MySQL, and PHP — no Docker or containers required. DVWA does
+                also ship an official Dockerfile if you'd rather containerize
+                it, but every step in the
+                <a href="index.html">installation guide</a> works on a plain
+                Ubuntu or Kali install with no Docker involved.
+              </p>
+            </section>
+
+            <section class="step" id="full-checklist">
+              <h2>Still Not Working? Full Troubleshooting Checklist</h2>
+              <p>
+                If DVWA still isn't loading correctly after trying the fixes
+                above, work through this list in order:
+              </p>
+              <ul class="fix-list">
+                <li>
+                  <strong>Blank white page:</strong> enable PHP error display
+                  and check
+                  <code>sudo tail -f /var/log/apache2/error.log</code>
+                </li>
+                <li>
+                  <strong>"Unable to connect to the database":</strong>
+                  re-check <code>config.inc.php</code> matches your MySQL
+                  username and password
+                </li>
+                <li>
+                  <strong>PHP module errors:</strong> install missing modules
+                  and restart Apache
+                </li>
+                <li>
+                  <strong>Permission denied errors:</strong> re-apply the
+                  ownership commands above
+                </li>
+                <li>
+                  <strong>Login page rejects admin/password:</strong> make sure
+                  you clicked "Create / Reset Database" first
+                </li>
+                <li>
+                  <strong>Still stuck?</strong> re-check every step in the
+                  <a href="index.html">installation guide</a> in order — most
+                  issues trace back to one skipped or mistyped command
+                </li>
+              </ul>
+            </section>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="wrapper">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>About DVWA</h3>
+            <ul>
+              <li>
+                <a
+                  href="https://github.com/digininja/DVWA"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Official Repository</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://github.com/digininja"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Created by digininja</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://owasp.org/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >OWASP</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h3>Guides</h3>
+            <ul>
+              <li><a href="index.html">Installation Guide</a></li>
+              <li><a href="troubleshooting.html">Troubleshooting</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h3>Web Security</h3>
+            <ul>
+              <li>
+                <a
+                  href="https://owasp.org/www-project-top-ten/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >OWASP Top 10</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://www.mysql.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >MySQL Documentation</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://www.php.net/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >PHP Official Site</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-divider"></div>
+        <div class="footer-bottom">
+          <p>© 2026 DVWA Setup Guide. All rights reserved.</p>
+          <p>
+            <a style="color: inherit" href="./privacy-policy.html"
+              >Privacy Policy</a
+            >
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      function addCopyButtons() {
+        document.querySelectorAll(".code-block").forEach((block) => {
+          if (block.querySelector(".copy-btn")) return;
+          const btn = document.createElement("button");
+          btn.className = "copy-btn";
+          btn.textContent = "Copy";
+          btn.setAttribute("aria-label", "Copy command");
+
+          btn.addEventListener("click", async function (e) {
+            e.preventDefault();
+            const code = block.querySelector("pre code").textContent;
+            try {
+              await navigator.clipboard.writeText(code);
+              this.textContent = "✓ Copied!";
+              this.classList.add("copied");
+              setTimeout(() => {
+                this.textContent = "Copy";
+                this.classList.remove("copied");
+              }, 2000);
+            } catch {
+              const textarea = document.createElement("textarea");
+              textarea.value = code;
+              document.body.appendChild(textarea);
+              textarea.select();
+              document.execCommand("copy");
+              document.body.removeChild(textarea);
+              this.textContent = "✓ Copied!";
+              this.classList.add("copied");
+              setTimeout(() => {
+                this.textContent = "Copy";
+                this.classList.remove("copied");
+              }, 2000);
+            }
+          });
+          block.style.position = "relative";
+          block.appendChild(btn);
+        });
+      }
+
+      function updateSidebarActive() {
+        const sections = document.querySelectorAll(".step");
+        const links = document.querySelectorAll(".sidebar-toc a");
+        let current = "";
+        sections.forEach((section) => {
+          if (pageYOffset >= section.offsetTop - 100) {
+            current = section.getAttribute("id");
+          }
+        });
+        links.forEach((link) => {
+          link.classList.remove("active");
+          if (link.getAttribute("href").slice(1) === current) {
+            link.classList.add("active");
+          }
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        addCopyButtons();
+
+        // Header GitHub button click/hover tracking (same as install guide)
+        const headerBtn = document.querySelector("header .github-btn");
+        if (headerBtn) {
+          headerBtn.addEventListener("mouseenter", function () {
+            gtag("event", "github_btn_hover", { button_id: "header_star_btn" });
+          });
+          headerBtn.addEventListener("click", function () {
+            gtag("event", "github_btn_click", { button_id: "header_star_btn" });
+          });
+        }
+      });
+      window.addEventListener("scroll", updateSidebarActive);
+
+      // Troubleshooting page completion tracking (GA4): fires once someone
+      // scrolls down to the full checklist at the bottom of the page.
+      trackOnView("full-checklist", "troubleshooting_page_complete", {
+        event_category: "guide_progress",
+        event_label: "dvwa_troubleshooting_page",
+      });
+    </script>
+  </body>
+</html>
