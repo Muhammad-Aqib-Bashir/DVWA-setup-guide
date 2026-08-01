@@ -8,7 +8,7 @@
       name="robots"
       content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
     />
-    <title>How to Install DVWA in Ubuntu or Kali - Copy Paste Cmds</title>
+    <title>Install DVWA in Ubuntu or Kali - Copy Paste Cmds</title>
     <link rel="shortcut icon" href="./favicon.png" type="image/png" />
 
     <meta
@@ -17,7 +17,7 @@
     />
     <meta
       name="keywords"
-      content="DVWA installation, Damn Vulnerable Web Application, DVWA setup Ubuntu, DVWA Kali Linux, DVWA Apache MySQL PHP, web security lab, ethical hacking setup, DVWA tutorial 2024, install DVWA, LAMP stack DVWA"
+      content="DVWA installation, Damn Vulnerable Web Application, DVWA setup Ubuntu, DVWA Kali Linux, DVWA Apache MySQL PHP, web security lab, ethical hacking setup, DVWA tutorial 2024, install DVWA, LAMP stack DVWA, dvwa setup guide, how to install dvwa on kali linux, dvwa setup ubuntu, dvwa installation guide, dvwa download, tryhackme, try hack me, dvwa on linux"
     />
     <meta name="author" content="Muhammad Aqib Bashir" />
     <meta name="theme-color" content="#3b82f6" />
@@ -139,7 +139,17 @@
               "download dvwa",
               "dvwa download",
               "tryhackme",
-              "try hack me"
+              "try hack me",
+              "dvwa setup guide",
+              "dvwa on linux",
+              "dvwa on ubuntu",
+              "dvwa on kali",
+              "how to install dvwa on kali linux",
+              "how to install dvwa on kali",
+              "how to install dvwa on ubuntu",
+              "how to install dvwa in kali linux",
+              "how to install dvwa in kali",
+              "how to install dvwa in ubuntu"
             ],
             "articleSection": "Web Security",
             "inLanguage": "en-US",
@@ -775,7 +785,8 @@ sudo systemctl enable mysql</code></pre>
               code: "sudo systemctl start apache2\nsudo systemctl start mysql",
             },
           ],
-          info: "<strong>Why?</strong> Apache serves the DVWA interface, MySQL stores data and user accounts.",
+
+          info: "<strong>Why?</strong> Apache serves the DVWA interface, MySQL stores data and user accounts.\n\nPress <code>q</code> to quit the <code>systemctl</code> output view.",
         },
         {
           id: "step2",
@@ -845,10 +856,12 @@ sudo systemctl enable mysql</code></pre>
           id: "step7",
           title: "7. Access MySQL",
           content:
-            "<p>Connect to MySQL as root to create the DVWA database:</p>",
-          codeBlocks: [{ code: "mysql -u root -p" }],
-          afterCode: "<p>Enter your MySQL root password when prompted.</p>",
-          info: "<strong>Note:</strong> If just installed, the password might be empty, just press ENTER.",
+            "<p>Connect to MySQL as root to create the DVWA database. On Kali and most modern Debian-based systems, the root database user authenticates through your Linux login (unix_socket), not a database password s,o use <code>sudo</code>:</p>",
+          codeBlocks: [{ code: "sudo mysql -u root" }],
+          afterCode:
+            "<p>If your system is configured for password auth instead, use this and enter the password when prompted (press ENTER if it's blank):</p>",
+          moreBlocks: [{ code: "mysql -u root -p" }],
+          info: "<strong>Getting \"Access denied for user 'root'@'localhost'\"?</strong> That means your system uses socket auth — switch to <code>sudo mysql -u root</code> above instead of the password-based command.",
         },
         {
           id: "step8",
@@ -865,13 +878,15 @@ sudo systemctl enable mysql</code></pre>
         {
           id: "step9",
           title: "9. Configure PHP",
-          content: "<p>DVWA requires specific PHP settings:</p>",
-          codeBlocks: [{ code: "sudo nano /etc/php/8.2/apache2/php.ini" }],
+          content:
+            "<p>DVWA requires specific PHP settings. The PHP version in the config path changes over time and by OS, this guide was originally written for 8.2, but your system may already be on 8.3, 8.4, or newer. Find your real path first:</p>",
+          codeBlocks: [{ code: 'php --ini | grep "Loaded Configuration"' }],
           afterCode:
-            "<p>Find and set these (use <code>CTRL + W</code> to search):</p>",
-          moreBlocks: [{ code: "allow_url_include = On\ndisplay_errors = On" }],
+            "<p>Open whatever path it prints — for example (yours may differ):</p>",
+          moreBlocks: [{ code: "sudo nano /etc/php/8.4/apache2/php.ini" }],
           afterCode2:
-            "<p>Save: <code>CTRL + O</code> → <code>ENTER</code> → <code>CTRL + X</code></p>",
+            '<p>Find and set these (use <code>CTRL + W</code> to search):</p><div class="code-block"><pre><code>allow_url_include = On\ndisplay_errors = On</code></pre></div><p>Save: <code>CTRL + O</code> → <code>ENTER</code> → <code>CTRL + X</code></p>',
+          info: "You may copy the file path and open in the file explorer and these will be near line 866.",
           warning:
             "<strong>⚠ Security Warning:</strong> These settings are intentional for DVWA's vulnerable nature. Never use on production servers.",
         },
@@ -893,17 +908,18 @@ sudo systemctl enable mysql</code></pre>
           content: "<p>Check that required PHP modules are installed:</p>",
           codeBlocks: [{ code: "php -m" }],
           afterCode:
-            "<p>Look for: <code>mysqli</code>, <code>gd</code>, <code>curl</code>, <code>openssl</code></p><p>If missing, install them:</p>",
+            "<p>Look for: <code>mysqli</code>, <code>gd</code>, <code>curl</code>, <code>openssl</code>. <code>openssl</code> is built into PHP core on Debian/Kali — there's no <code>php-openssl</code> package, so don't try to install one (it will fail with \"Unable to locate package\"). If <code>mysqli</code>, <code>gd</code>, or <code>curl</code> are missing:</p>",
           moreBlocks: [
             {
-              code: "sudo apt install php-mysqli php-gd php-curl php-openssl\nsudo systemctl restart apache2",
+              code: "sudo apt install php-mysqli php-gd php-curl\nsudo systemctl restart apache2",
             },
           ],
         },
         {
           id: "step12",
           title: "12. Open DVWA in Browser",
-          content: "<p>Navigate to:</p>",
+          content:
+            "<p>Open your <strong>web browser</strong> (Firefox, Chrome, etc.) — not the terminal — and go to:</p>",
           codeBlocks: [{ code: "http://localhost/DVWA" }],
           afterCode: "<p>Or from another computer:</p>",
           moreBlocks: [{ code: "http://YOUR_SERVER_IP/DVWA" }],
@@ -917,8 +933,6 @@ sudo systemctl enable mysql</code></pre>
           content:
             "<p>The default DVWA login credentials are username <code>admin</code> and password <code>password</code>:</p>",
           codeBlocks: [{ code: "Username: admin\nPassword: password" }],
-          warning:
-            "<strong>Important:</strong> Change these credentials after login for practice scenarios.",
         },
       ];
 
