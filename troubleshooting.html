@@ -386,7 +386,8 @@ CREATE DATABASE dvwa;</code></pre>
               <p>
                 Going forward, using
                 <code>CREATE DATABASE IF NOT EXISTS dvwa;</code> (as the current
-                install guide does) avoids this error entirely on re-runs.
+                <a href="index.html#step8">install guide</a> does) avoids this
+                error entirely on re-runs.
               </p>
             </section>
 
@@ -442,8 +443,8 @@ $_DVWA['db_password'] = 'password';</code></pre>
                 If you're not sure the MySQL user exists, log back into MySQL
                 (<code>mysql -u root -p</code>) and re-run the
                 <code>CREATE USER</code> and
-                <code>GRANT ALL PRIVILEGES</code> commands from the install
-                guide.
+                <code>GRANT ALL PRIVILEGES</code> commands from the
+                <a href="index.html#step8">install guide</a>.
               </p>
             </section>
 
@@ -574,12 +575,12 @@ sudo chmod -R 777 /var/www/html/DVWA/config</code></pre>
             <section class="step" id="no-docker">
               <h2>Installing DVWA Without Docker</h2>
               <p>
-                The main install guide sets up DVWA natively using Apache,
-                MySQL, and PHP, no Docker or containers required. DVWA does also
-                ship an official Dockerfile if you'd rather containerize it, but
-                every step in the
+                The main <a href="index.html">install guide</a> sets up DVWA
+                natively using Apache, MySQL, and PHP, no Docker or containers
+                required. DVWA does also ship an official Dockerfile if you'd
+                rather containerize it, but every step in the
                 <a href="index.html">installation guide</a> works on a plain
-                Ubuntu or Kali install with no Docker involved.
+                Ubuntu or Kali install.
               </p>
             </section>
 
