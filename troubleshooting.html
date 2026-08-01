@@ -233,7 +233,7 @@
         <div class="header-content">
           <a href="index.html" class="logo">
             <img src="./favicon.png" alt="DVWA Setup logo" class="logo-icon" />
-            DVWA Setup Guide
+            DVWA Setup
           </a>
           <nav class="header-nav">
             <a href="index.html">Install Guide</a>
@@ -276,15 +276,24 @@
           >
           <h1>DVWA Troubleshooting Guide</h1>
           <p>Fixes for common DVWA setup errors on Ubuntu & Kali Linux</p>
+          <div class="breadcrumb">
+            Home / DVWA Setup Guide / Troubleshooting
+          </div>
         </section>
 
         <div class="main-layout">
           <aside class="sidebar-toc">
             <h2>Common Errors</h2>
             <ul id="sidebarList">
+              <li><a href="#error-mysql-access">MySQL Access Denied</a></li>
+              <li><a href="#error-db-exists">Database Already Exists</a></li>
               <li><a href="#error-404">404 Not Found</a></li>
               <li>
                 <a href="#error-db-connection">Database Connection Failed</a>
+              </li>
+              <li><a href="#error-php-version">Wrong PHP Version Path</a></li>
+              <li>
+                <a href="#error-openssl-package">php-openssl Package Error</a>
               </li>
               <li><a href="#error-blank-page">Blank White Page</a></li>
               <li><a href="#error-php-modules">Missing PHP Modules</a></li>
@@ -299,9 +308,15 @@
             <nav class="toc">
               <h2>Quick Navigation</h2>
               <ul>
+                <li><a href="#error-mysql-access">MySQL Access Denied</a></li>
+                <li><a href="#error-db-exists">Database Already Exists</a></li>
                 <li><a href="#error-404">404 Not Found</a></li>
                 <li>
                   <a href="#error-db-connection">Database Connection Failed</a>
+                </li>
+                <li><a href="#error-php-version">Wrong PHP Version Path</a></li>
+                <li>
+                  <a href="#error-openssl-package">php-openssl Package Error</a>
                 </li>
                 <li><a href="#error-blank-page">Blank White Page</a></li>
                 <li><a href="#error-php-modules">Missing PHP Modules</a></li>
@@ -311,6 +326,69 @@
                 <li><a href="#full-checklist">Full Checklist</a></li>
               </ul>
             </nav>
+
+            <section class="step" id="error-mysql-access">
+              <h2>MySQL: "Access Denied for User 'root'@'localhost'"</h2>
+              <div class="quick-answer">
+                <strong>Quick answer:</strong> Use
+                <code>sudo mysql -u root</code> instead of
+                <code>mysql -u root -p</code>.
+              </div>
+              <p>
+                On Kali and most modern Debian-based systems, the root
+                MySQL/MariaDB user authenticates through your Linux login (the
+                <code>unix_socket</code> plugin), not a database password.
+                Running <code>mysql -u root -p</code> and entering a password —
+                even a blank one — fails with this exact error. Use
+                <code>sudo</code> instead:
+              </p>
+              <div class="code-block">
+                <pre><code>sudo mysql -u root</code></pre>
+              </div>
+              <p>
+                That drops you straight into the MariaDB prompt with no password
+                needed.
+              </p>
+              <p>
+                <strong>Want password-based root login instead?</strong> Once
+                you're in via <code>sudo mysql -u root</code>, you can switch
+                root to a real password:
+              </p>
+              <div class="code-block">
+                <pre><code>ALTER USER 'root'@'localhost' IDENTIFIED BY 'your_new_password';
+FLUSH PRIVILEGES;
+EXIT;</code></pre>
+              </div>
+              <p>
+                After that, <code>mysql -u root -p</code> will work too. This
+                isn't required for DVWA — <code>sudo mysql -u root</code> is
+                enough — but it's handy if other tools expect a root password.
+              </p>
+            </section>
+
+            <section class="step" id="error-db-exists">
+              <h2>"Can't Create Database 'dvwa'; Database Exists"</h2>
+              <div class="quick-answer">
+                <strong>Quick answer:</strong> A <code>dvwa</code> database
+                already exists from a previous attempt — reuse it or drop it.
+              </div>
+              <p>
+                This happens if you've run through the install before, even
+                partially. It's safe to just continue on to the
+                <code>CREATE USER</code> and <code>GRANT</code> commands using
+                the existing database. If you'd rather start completely clean,
+                drop it first:
+              </p>
+              <div class="code-block">
+                <pre><code>DROP DATABASE dvwa;
+CREATE DATABASE dvwa;</code></pre>
+              </div>
+              <p>
+                Going forward, using
+                <code>CREATE DATABASE IF NOT EXISTS dvwa;</code> (as the current
+                install guide does) avoids this error entirely on re-runs.
+              </p>
+            </section>
 
             <section class="step" id="error-404">
               <h2>DVWA Shows a 404 Not Found Error</h2>
@@ -367,6 +445,45 @@ $_DVWA['db_password'] = 'password';</code></pre>
                 <code>GRANT ALL PRIVILEGES</code> commands from the install
                 guide.
               </p>
+            </section>
+
+            <section class="step" id="error-php-version">
+              <h2>php.ini: "No Such File or Directory"</h2>
+              <div class="quick-answer">
+                <strong>Quick answer:</strong> Your PHP version doesn't match
+                the guide's example path — find your real one.
+              </div>
+              <p>
+                Guides (including this one) often show a specific path like
+                <code>/etc/php/8.2/apache2/php.ini</code>, but that version
+                number goes stale as OSes ship newer PHP releases — Kali, for
+                example, has moved to PHP 8.4. Find your actual path instead of
+                copying the example literally:
+              </p>
+              <div class="code-block">
+                <pre><code>php --ini | grep "Loaded Configuration"</code></pre>
+              </div>
+              <p>Open whatever path that prints.</p>
+            </section>
+
+            <section class="step" id="error-openssl-package">
+              <h2>apt: "Unable to Locate Package php-openssl"</h2>
+              <div class="quick-answer">
+                <strong>Quick answer:</strong> There's no such package — OpenSSL
+                support is already built into PHP.
+              </div>
+              <p>
+                On Debian and Kali, OpenSSL support ships compiled directly into
+                PHP core rather than as a separate extension package, so
+                <code>php-openssl</code> doesn't exist and
+                <code>apt install</code> will always fail to find it. Check
+                <code>php -m</code> — if <code>openssl</code> is already listed,
+                there's nothing to install. Just install whichever of the others
+                are actually missing:
+              </p>
+              <div class="code-block">
+                <pre><code>sudo apt install php-mysqli php-gd php-curl</code></pre>
+              </div>
             </section>
 
             <section class="step" id="error-blank-page">
@@ -473,6 +590,15 @@ sudo chmod -R 777 /var/www/html/DVWA/config</code></pre>
                 above, work through this list in order:
               </p>
               <ul class="fix-list">
+                <li>
+                  <strong>MySQL "access denied" for root:</strong> use
+                  <code>sudo mysql -u root</code> instead of
+                  <code>mysql -u root -p</code>
+                </li>
+                <li>
+                  <strong>"php.ini: no such file or directory":</strong> run
+                  <code>php --ini</code> to find your actual PHP version path
+                </li>
                 <li>
                   <strong>Blank white page:</strong> enable PHP error display
                   and check
