@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://muhammad-aqib-bashir.github.io/DVWA-setup-guide/sitemap.xml
