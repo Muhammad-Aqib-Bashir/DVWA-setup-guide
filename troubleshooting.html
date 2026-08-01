@@ -12,7 +12,7 @@
     <link rel="icon" href="./favicon.png" />
     <meta
       name="description"
-      content="Fix common DVWA errors on Ubuntu and Kali Linux: 404 Not Found, database connection failures, blank pages, missing PHP modules, and permission errors — with exact fixes."
+      content="Fix common DVWA errors on Ubuntu and Kali Linux: 404 Not Found, database connection failures, blank pages, missing PHP modules, and permission errors, with exact fixes."
     />
     <meta
       name="keywords"
@@ -34,7 +34,7 @@
     />
     <meta
       property="og:description"
-      content="Fix common DVWA errors on Ubuntu and Kali Linux — 404s, database connection failures, blank pages, missing PHP modules, and permission errors."
+      content="Fix common DVWA errors on Ubuntu and Kali Linux, 404s, database connection failures, blank pages, missing PHP modules, and permission errors."
     />
     <meta
       property="og:url"
@@ -48,7 +48,7 @@
     <meta property="og:image:height" content="630" />
     <meta
       property="og:image:alt"
-      content="DVWA Troubleshooting Guide — Ubuntu and Kali Linux"
+      content="DVWA Troubleshooting Guide, Ubuntu and Kali Linux"
     />
     <meta property="og:locale" content="en_US" />
     <meta property="article:author" content="Muhammad Aqib Bashir" />
@@ -68,7 +68,7 @@
     />
     <meta
       name="twitter:description"
-      content="Fix common DVWA errors on Ubuntu and Kali Linux — 404s, database connection failures, blank pages, and more."
+      content="Fix common DVWA errors on Ubuntu and Kali Linux, 404s, database connection failures, blank pages, and more."
     />
     <meta
       name="twitter:image"
@@ -76,7 +76,7 @@
     />
     <meta
       name="twitter:image:alt"
-      content="DVWA Troubleshooting Guide — Ubuntu and Kali Linux"
+      content="DVWA Troubleshooting Guide, Ubuntu and Kali Linux"
     />
     <meta name="twitter:creator" content="@mAqibBashir" />
     <meta name="twitter:site" content="@mAqibBashir" />
@@ -339,7 +339,7 @@
                 MySQL/MariaDB user authenticates through your Linux login (the
                 <code>unix_socket</code> plugin), not a database password.
                 Running <code>mysql -u root -p</code> and entering a password —
-                even a blank one — fails with this exact error. Use
+                even a blank one, fails with this exact error. Use
                 <code>sudo</code> instead:
               </p>
               <div class="code-block">
@@ -361,8 +361,8 @@ EXIT;</code></pre>
               </div>
               <p>
                 After that, <code>mysql -u root -p</code> will work too. This
-                isn't required for DVWA — <code>sudo mysql -u root</code> is
-                enough — but it's handy if other tools expect a root password.
+                isn't required for DVWA, <code>sudo mysql -u root</code> is
+                enough, but it's handy if other tools expect a root password.
               </p>
             </section>
 
@@ -370,7 +370,7 @@ EXIT;</code></pre>
               <h2>"Can't Create Database 'dvwa'; Database Exists"</h2>
               <div class="quick-answer">
                 <strong>Quick answer:</strong> A <code>dvwa</code> database
-                already exists from a previous attempt — reuse it or drop it.
+                already exists from a previous attempt, reuse it or drop it.
               </div>
               <p>
                 This happens if you've run through the install before, even
@@ -400,7 +400,7 @@ CREATE DATABASE dvwa;</code></pre>
                 A 404 usually means Apache isn't serving files from the DVWA
                 folder yet. Confirm you cloned DVWA directly into
                 <code>/var/www/html</code> so the URL matches
-                <code>http://localhost/DVWA</code> exactly — folder names are
+                <code>http://localhost/DVWA</code> exactly, folder names are
                 case-sensitive on Linux, so <code>dvwa</code> and
                 <code>DVWA</code> are different paths. Then confirm Apache is
                 actually running:
@@ -451,12 +451,12 @@ $_DVWA['db_password'] = 'password';</code></pre>
               <h2>php.ini: "No Such File or Directory"</h2>
               <div class="quick-answer">
                 <strong>Quick answer:</strong> Your PHP version doesn't match
-                the guide's example path — find your real one.
+                the guide's example path, find your real one.
               </div>
               <p>
                 Guides (including this one) often show a specific path like
                 <code>/etc/php/8.2/apache2/php.ini</code>, but that version
-                number goes stale as OSes ship newer PHP releases — Kali, for
+                number goes stale as OSes ship newer PHP releases, Kali, for
                 example, has moved to PHP 8.4. Find your actual path instead of
                 copying the example literally:
               </p>
@@ -469,7 +469,7 @@ $_DVWA['db_password'] = 'password';</code></pre>
             <section class="step" id="error-openssl-package">
               <h2>apt: "Unable to Locate Package php-openssl"</h2>
               <div class="quick-answer">
-                <strong>Quick answer:</strong> There's no such package — OpenSSL
+                <strong>Quick answer:</strong> There's no such package, OpenSSL
                 support is already built into PHP.
               </div>
               <p>
@@ -477,7 +477,7 @@ $_DVWA['db_password'] = 'password';</code></pre>
                 PHP core rather than as a separate extension package, so
                 <code>php-openssl</code> doesn't exist and
                 <code>apt install</code> will always fail to find it. Check
-                <code>php -m</code> — if <code>openssl</code> is already listed,
+                <code>php -m</code>, if <code>openssl</code> is already listed,
                 there's nothing to install. Just install whichever of the others
                 are actually missing:
               </p>
@@ -490,7 +490,7 @@ $_DVWA['db_password'] = 'password';</code></pre>
               <h2>DVWA Shows a Blank White Page</h2>
               <div class="quick-answer">
                 <strong>Quick answer:</strong> A PHP error is being silently
-                suppressed — turn on error display to see it.
+                suppressed, turn on error display to see it.
               </div>
               <p>
                 A blank page almost always means PHP hit a fatal error but isn't
@@ -508,7 +508,7 @@ $_DVWA['db_password'] = 'password';</code></pre>
                 <pre><code>sudo systemctl restart apache2</code></pre>
               </div>
               <p>
-                Reload the page — the real error should now appear. You can also
+                Reload the page, the real error should now appear. You can also
                 check the log directly:
               </p>
               <div class="code-block">
@@ -563,7 +563,7 @@ sudo chmod -R 777 /var/www/html/DVWA/config</code></pre>
               </div>
               <p>
                 DVWA's default login is username <code>admin</code> and password
-                <code>password</code> — but the account only exists after the
+                <code>password</code>, but the account only exists after the
                 database tables have been created. Visit
                 <code>http://localhost/DVWA/setup.php</code> and click
                 <strong>"Create / Reset Database"</strong>, then try logging in
@@ -575,9 +575,9 @@ sudo chmod -R 777 /var/www/html/DVWA/config</code></pre>
               <h2>Installing DVWA Without Docker</h2>
               <p>
                 The main install guide sets up DVWA natively using Apache,
-                MySQL, and PHP — no Docker or containers required. DVWA does
-                also ship an official Dockerfile if you'd rather containerize
-                it, but every step in the
+                MySQL, and PHP, no Docker or containers required. DVWA does also
+                ship an official Dockerfile if you'd rather containerize it, but
+                every step in the
                 <a href="index.html">installation guide</a> works on a plain
                 Ubuntu or Kali install with no Docker involved.
               </p>
@@ -623,7 +623,7 @@ sudo chmod -R 777 /var/www/html/DVWA/config</code></pre>
                 </li>
                 <li>
                   <strong>Still stuck?</strong> re-check every step in the
-                  <a href="index.html">installation guide</a> in order — most
+                  <a href="index.html">installation guide</a> in order, most
                   issues trace back to one skipped or mistyped command
                 </li>
               </ul>
