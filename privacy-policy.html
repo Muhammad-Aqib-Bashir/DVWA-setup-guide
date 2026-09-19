@@ -23,7 +23,7 @@
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-Q8MJM8LBXM"
     ></script>
-    <script src="./analytics.js"></script>
+    <script src="./scripts/analytics.js"></script>
 
     <!-- Shared styles (used by every page) -->
     <link rel="stylesheet" href="./styles/index.css" />
@@ -391,10 +391,10 @@
         const headerBtn = document.querySelector("header .github-btn");
         if (headerBtn) {
           headerBtn.addEventListener("mouseenter", function () {
-            gtag("event", "github_btn_hover", { button_id: "header_star_btn" });
+            trackStarHover("header_star_btn");
           });
           headerBtn.addEventListener("click", function () {
-            gtag("event", "github_btn_click", { button_id: "header_star_btn" });
+            trackStarClick("header_star_btn");
           });
         }
       });

@@ -579,16 +579,10 @@
                 "
                 onmouseover="
                   this.style.background = '#1f2937';
-                  gtag('event', 'github_btn_hover', {
-                    button_id: 'cta_star_btn',
-                  });
+                  trackStarHover('cta_star_btn');
                 "
                 onmouseout="this.style.background = '#111827'"
-                onclick="
-                  gtag('event', 'github_btn_click', {
-                    button_id: 'cta_star_btn',
-                  })
-                "
+                onclick="trackStarClick('cta_star_btn')"
               >
                 <svg
                   viewBox="0 0 24 24"
@@ -611,14 +605,10 @@
                 const headerBtn = document.querySelector("header .github-btn");
                 if (headerBtn) {
                   headerBtn.addEventListener("mouseenter", function () {
-                    gtag("event", "github_btn_hover", {
-                      button_id: "header_star_btn",
-                    });
+                    trackStarHover("header_star_btn");
                   });
                   headerBtn.addEventListener("click", function () {
-                    gtag("event", "github_btn_click", {
-                      button_id: "header_star_btn",
-                    });
+                    trackStarClick("header_star_btn");
                   });
                 }
               });

@@ -780,10 +780,10 @@ sudo chmod -R 777 /var/www/html/DVWA/config</code></pre>
         const headerBtn = document.querySelector("header .github-btn");
         if (headerBtn) {
           headerBtn.addEventListener("mouseenter", function () {
-            gtag("event", "github_btn_hover", { button_id: "header_star_btn" });
+            trackStarHover("header_star_btn");
           });
           headerBtn.addEventListener("click", function () {
-            gtag("event", "github_btn_click", { button_id: "header_star_btn" });
+            trackStarClick("header_star_btn");
           });
         }
       });
